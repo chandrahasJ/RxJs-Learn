@@ -1,0 +1,51 @@
+1> npm init -y
+2> npm install webpack webpack-dev-server typescript ts-loader
+3> npm install webpack-cli -only=dev
+4> npm install rxjs-compat or npm install rxjs-compact@latest --save
+5> package.json
+    "script" : "webpack-dev-server --mode develpoment"
+
+6> webpack.config.js
+   const path = require('path');
+
+	module.exports = {
+  		entry: './src/code.ts',
+  		devtool: 'inline-source-map',
+  		module: {
+    			rules: [
+      			{
+        			test: /\.tsx?$/,
+        			use: 'ts-loader',
+        			exclude: /node_modules/
+      			}
+    			]
+  },
+  resolve: {
+    extensions: [ '.ts', '.js', '.tsx' ]
+  },
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist')
+  }
+};
+7> tsconfig.json
+    {
+        "compilerOptions" :{
+            "outDir" : "./dist/",
+            "noImplicitAny": true,
+            "module" : "es6",
+            "moduleResolution" : "node",
+            "sourceMap" : true,
+            "target" : "es6",
+            "typeRoots" : [
+                "node_modules/@types"
+            ],
+            "lib" :[
+                "es2017",
+                "dom"
+            ]
+        }
+    }
+8>  import * as Rx from "rxjs/Observable";
+
+    console.log(Rx);
