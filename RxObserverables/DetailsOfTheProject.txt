@@ -1,0 +1,56 @@
+1> Observables are streams of events,data etc.
+2> Stream is concepts of events or values that are emitted over time..
+3> Observales helps you to use the streams
+4> Observables helps to utilize those streams and modify or play with it.
+5> Stream can be any thing for examples Mouse Events, Key Board Strokes, DataBase rows, Array etc.
+6> Observable -> we must create a Observable by using Dynamic Or Static function
+    e.g. Observable.Create(function()), Observable.of(function()) etc..
+7) To Activate a Observable we must subscribe to it by using 
+   "subscribe()" function
+8) Observer -> it is a set of callbacks that excepts notifications(data) coming from Observable.
+   <observable>$.subscribe((<variableName:any>)=> console.log(<variableName>)); 
+9) While creating Observable object, we can define next(), error() & complete()
+    var observable$ = Observable.create((observer:any) => {
+        try{
+            observer.next("Streams of data 1");
+            observer.next("Streams of data 2");
+            observer.complete();
+        }
+        catch(errorData){
+            observer.error(errorData);
+        }
+    });
+    next("") => Sents notifications to Observer
+    error(errorData) => Sents notifications to Observer if any error occurs
+    complete() =>  Sents notifications to observer if observable is completed its task
+10) After Creating Observable we have to subscribe to the Observable i.e. Creating Observer
+    var observer$ =observable$.subscribe(
+                        (x:any) => console.log(x),//Next notifications will be called here
+                        (errorData:any) => console.log(errorData), //Error notifications will be called here 
+                        () => concole.log("Data") //Completed notifications will be called here.
+                     );
+11) unsubscribe => We can cancel the Obserer from emitting values\data etc. by calling 
+    unsubscribe function on observer <variableName>
+    observer$ .unsubscribe();
+12) Creating Multiple Subscriptions
+    We can add more than one observer to same observable
+    var Observer$ = observable$.subscribe(
+        (x:any) => console.log(x),//Next notifications will be called here
+    );
+    Observer$.unsubscribe();
+    var Observer2$ = observable$.subscribe(
+        (x:any) => console.log(x),//Next notifications will be called here
+    );
+    We can add more than one Observer on the same observable$
+    If we unsubscribe one observer$ it will not effect the other observer2$.
+    then other observer2$ will work seemlesly
+    Observer$ & Observer2$ both are different entity having same Observable but are not attached with each other.    
+13) Child Subscriptions
+    We can attach observer$ with observer2$ by using add method as shown below
+    observer$.add(observer$2);
+    observer$.unsubscribe();
+    Now if we call unsubscribe on observer$ then it will unsubscribe both of the subscribation\observer.
+    observer2$.unsubscribe();
+    but if we call unsubscribe on observer2$ then it will only unsubscribe observer2$.
+    Call unsubscribe on Child Subscriptions\observer will not unsubscribe parent subscribation.
+ 
